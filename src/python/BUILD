@@ -1,11 +1,11 @@
 python_library(
   name = 'plugin',
-  sources = rglobs('*.py'),
+  sources = rglobs('trueaccord/pants/*.py'),
   dependencies = [
   ],
   provides = setup_py(
     name = 'scalapb.pants',
-    version = '0.1',
+    version = '0.1.1',
     description = 'ScalaPB plugin for Pants',
     url = 'https://github.com/trueaccord/scalapb-pants',
     author = 'Nadav Sr. Samet',

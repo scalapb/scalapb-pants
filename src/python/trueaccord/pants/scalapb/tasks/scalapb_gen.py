@@ -17,7 +17,7 @@ from pants.base.build_environment import get_buildroot
 from pants.base.exceptions import TaskError
 from pants.build_graph.address import Address
 from pants.fs.archive import ZIP
-from scalapb.targets.scalapb_library import ScalaPBLibrary
+from trueaccord.pants.scalapb.targets.scalapb_library import ScalaPBLibrary
 
 
 class ScalaPBGen(SimpleCodegenTask, NailgunTask):
@@ -86,10 +86,8 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     """
     files = set()
     jar_import_products = self.context.products.get_data(JarImportProducts)
-    print ('jip', jar_import_products)
     imports = jar_import_products.imports(target)
     for coordinate, jar in imports:
-      print ('jip', jar)
       files.add(self._extract_jar(coordinate, jar))
     return files
 
