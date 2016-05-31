@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package simple;
+
+message SimpleMessage {
+  optional int32 number = 1;
+}
+

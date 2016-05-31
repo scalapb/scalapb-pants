@@ -11,12 +11,21 @@ from pants.base.payload_field import PrimitiveField
 
 logger = logging.getLogger(__name__)
 
-class ScalaPbLibrary(ImportJarsMixin, JvmTarget):
+class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
   """A Java library generated from Protocol Buffer IDL files."""
 
-  def __init__(self, payload=None, mports, **kwargs):
+  def __init__(self, payload=None, imports=None, **kwargs):
     payload = payload or Payload()
     payload.add_fields({
       'import_specs': PrimitiveField(imports or ())
     })
-    super(ScalaPbLibrary, self).__init__(payload=payload, **kwargs)
+    super(ScalaPBLibrary, self).__init__(payload=payload, **kwargs)
+
+  @property
+  def imported_jar_library_specs(self):
+    """List of JarLibrary specs to import.
+
+    Required to implement the ImportJarsMixin.
+    """
+    return self.payload.import_specs
+

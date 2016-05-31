@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+package client;
+
+import "examples/simple/simple.proto";
+import "scalapb/scalapb.proto";
+
+message Foo {
+  optional simple.SimpleMessage sm = 1;
+}

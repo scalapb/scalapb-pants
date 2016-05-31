@@ -8,20 +8,19 @@ from hashlib import sha1
 
 from twitter.common.collections import OrderedSet
 
-from scalapb.targets.scalapb_library import ScalaPbLibrary
 from pants.backend.codegen.tasks.simple_codegen_task import SimpleCodegenTask
 from pants.backend.jvm.targets.jar_library import JarLibrary
 from pants.backend.jvm.targets.scala_library import ScalaLibrary
 from pants.backend.jvm.tasks.jar_import_products import JarImportProducts
+from pants.backend.jvm.tasks.nailgun_task import NailgunTask
 from pants.base.build_environment import get_buildroot
 from pants.base.exceptions import TaskError
 from pants.build_graph.address import Address
 from pants.fs.archive import ZIP
+from scalapb.targets.scalapb_library import ScalaPBLibrary
 
-from pants.backend.jvm.tasks.nailgun_task import NailgunTask
 
-
-class ScalaPBGen(SimpleCodegenTask, NailGunTask):
+class ScalaPBGen(SimpleCodegenTask, NailgunTask):
   def __init__(self, *args, **kwargs):
     super(ScalaPBGen, self).__init__(*args, **kwargs)
 
@@ -34,7 +33,7 @@ class ScalaPBGen(SimpleCodegenTask, NailGunTask):
     return ScalaLibrary
 
   def is_gentarget(self, target):
-    return isinstance(target, ScalaPbLibrary)
+    return isinstance(target, ScalaPBLibrary)
 
   def execute_codegen(self, target, target_workdir):
     sources_by_base = self._calculate_sources(target)
@@ -42,20 +41,16 @@ class ScalaPBGen(SimpleCodegenTask, NailGunTask):
 
     bases = OrderedSet(sources_by_base.keys())
     bases.update(self._proto_path_imports([target]))
+    bases.update('.')
 
     gen_flag = '--scala_out'
 
     gen = '{0}={1}'.format(gen_flag, target_workdir)
 
-    args = [self.spbc_binary, gen]
+    args = [gen]
 
-    if self.plugins:
-      for plugin in self.plugins:
-        args.append("--{0}_out={1}".format(plugin, target_workdir))
-
-    # bases = ['.', ...]
-    # for base in bases:
-    #   args.append('--proto_path={0}'.format(base))
+    for base in bases:
+      args.append('--proto_path={0}'.format(base))
 
     classpath = self.tool_classpath('scalapbc')
 
@@ -64,7 +59,7 @@ class ScalaPBGen(SimpleCodegenTask, NailGunTask):
     result = self.runjava(classpath=classpath, main=main, args=args, workunit_name='scalapb-gen')
 
     if result != 0:
-      raise TaskError('scalapb-gen ... exited non-zero ({1})'.format(result))
+      raise TaskError('scalapb-gen ... exited non-zero ({})'.format(result))
 
   def _calculate_sources(self, target):
     gentargets = OrderedSet()
@@ -91,8 +86,10 @@ class ScalaPBGen(SimpleCodegenTask, NailGunTask):
     """
     files = set()
     jar_import_products = self.context.products.get_data(JarImportProducts)
+    print ('jip', jar_import_products)
     imports = jar_import_products.imports(target)
     for coordinate, jar in imports:
+      print ('jip', jar)
       files.add(self._extract_jar(coordinate, jar))
     return files
 
