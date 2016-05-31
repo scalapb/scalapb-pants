@@ -11,5 +11,5 @@ def build_file_aliases():
     )
 
 def register_goals():
-    task(name='scalapb_gen', action=ScalaPBGen).install('gen')
+    task(name='scalapb-gen', action=ScalaPBGen).install('gen')
 

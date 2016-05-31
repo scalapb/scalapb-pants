@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package dep;
 
-import "examples/simple/simple.proto";
+import "simple.proto";
 
 message DependentProto {
   optional simple.SimpleMessage simple_field = 1;

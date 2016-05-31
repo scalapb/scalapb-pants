@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package client;
 
-import "examples/simple/simple.proto";
+import "simple.proto";
 import "scalapb/scalapb.proto";
 
 message Foo {

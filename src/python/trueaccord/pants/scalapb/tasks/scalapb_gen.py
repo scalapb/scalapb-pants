@@ -28,6 +28,8 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
   def register_options(cls, register):
     super(ScalaPBGen, cls).register_options(register)
     cls.register_jvm_tool(register, 'scalapbc')
+    register('--protoc-version', fingerprint=True,
+             help='Set a specific protoc version to use.', default='261')
 
   def synthetic_target_type(self, target):
     return ScalaLibrary
@@ -47,7 +49,7 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
 
     gen = '{0}={1}'.format(gen_flag, target_workdir)
 
-    args = [gen]
+    args = ['-v%s' % self.get_options().protoc_version, gen]
 
     for base in bases:
       args.append('--proto_path={0}'.format(base))
