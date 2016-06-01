@@ -1,5 +1,5 @@
-import simple.simple.SimpleMessage
-import dep.dep.DependentProto
+import com.trueaccord.scalapb.examples.simple.SimpleMessage
+import com.trueaccord.scalapb.examples.dep.DependentProto
 
 object Main {
   def main(args: Array[String]) = {

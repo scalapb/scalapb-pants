@@ -14,9 +14,18 @@ logger = logging.getLogger(__name__)
 class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
   """A Java library generated from Protocol Buffer IDL files."""
 
-  def __init__(self, payload=None, imports=None, **kwargs):
+  def __init__(self, payload=None, imports=None,
+               java_conversions=False,
+               flat_package=False,
+               grpc=True,
+               single_line_to_string=False,
+               **kwargs):
     payload = payload or Payload()
     payload.add_fields({
+      'java_conversions': PrimitiveField(java_conversions),
+      'flat_package': PrimitiveField(flat_package),
+      'grpc': PrimitiveField(grpc),
+      'single_line_to_string': PrimitiveField(single_line_to_string),
       'import_specs': PrimitiveField(imports or ())
     })
     super(ScalaPBLibrary, self).__init__(payload=payload, **kwargs)

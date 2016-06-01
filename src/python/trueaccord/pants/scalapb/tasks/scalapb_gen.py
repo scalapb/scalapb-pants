@@ -45,11 +45,22 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     bases.update(self._proto_path_imports([target]))
     bases.update('.')
 
-    gen_flag = '--scala_out'
+    scalapb_options = []
+    if target.payload.java_conversions:
+        scalapb_options.append('java_conversions')
+    if target.payload.grpc:
+        scalapb_options.append('grpc')
+    if target.payload.flat_package:
+        scalapb_options.append('flat_package')
+    if target.payload.single_line_to_string:
+        scalapb_options.append('single_line_to_string')
 
-    gen = '{0}={1}'.format(gen_flag, target_workdir)
+    gen_scala = '--scala_out={0}:{1}'.format(','.join(scalapb_options), target_workdir)
 
-    args = ['-v%s' % self.get_options().protoc_version, gen]
+    args = ['-v%s' % self.get_options().protoc_version, gen_scala]
+
+    if target.payload.java_conversions:
+        args.append('--java_out={0}'.format(target_workdir))
 
     for base in bases:
       args.append('--proto_path={0}'.format(base))

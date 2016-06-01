@@ -2,8 +2,10 @@ scalapb_library(
   name='simple_proto',
   sources=['./simple.proto'],
   dependencies=[
-    '3rdparty/jvm:scalapb-runtime'
-  ]
+    '3rdparty/jvm:scalapb-runtime',
+    '3rdparty/jvm:protobuf-runtime',
+  ],
+  java_conversions=True
 )
 
 scalapb_library(

@@ -4,3 +4,9 @@ jar_library(name = 'scalapb-runtime',
   ]
 )
 
+jar_library(name = 'protobuf-runtime',
+  jars = [
+    jar('com.google.protobuf', 'protobuf-java', '3.0.0-beta-3')
+  ]
+)
+

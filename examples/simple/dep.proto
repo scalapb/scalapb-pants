@@ -2,6 +2,8 @@ syntax = "proto2";
 
 package dep;
 
+option java_package = "com.trueaccord.scalapb.examples";
+
 import "simple.proto";
 
 message DependentProto {
