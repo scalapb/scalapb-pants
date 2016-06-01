@@ -5,7 +5,7 @@ python_library(
   ],
   provides = setup_py(
     name = 'scalapb.pants',
-    version = '0.1.2',
+    version = '0.1.3',
     description = 'ScalaPB plugin for Pants',
     url = 'https://github.com/trueaccord/scalapb-pants',
     author = 'Nadav Sr. Samet',
