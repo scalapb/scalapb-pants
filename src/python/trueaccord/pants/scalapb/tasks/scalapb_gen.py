@@ -38,12 +38,10 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     return isinstance(target, ScalaPBLibrary)
 
   def execute_codegen(self, target, target_workdir):
-    sources_by_base = self._calculate_sources(target)
     sources = target.sources_relative_to_buildroot()
 
-    bases = OrderedSet(sources_by_base.keys())
-    bases.update(self._proto_path_imports([target]))
-    bases.update('.')
+    source_roots = self._calculate_source_roots(target)
+    source_roots.update(self._proto_path_imports([target]))
 
     scalapb_options = []
     if target.payload.java_conversions:
@@ -62,8 +60,8 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     if target.payload.java_conversions:
         args.append('--java_out={0}'.format(target_workdir))
 
-    for base in bases:
-      args.append('--proto_path={0}'.format(base))
+    for source_root in source_roots:
+      args.append('--proto_path={0}'.format(source_root))
 
     classpath = self.tool_classpath('scalapbc')
 
@@ -74,23 +72,17 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     if result != 0:
       raise TaskError('scalapb-gen ... exited non-zero ({})'.format(result))
 
-  def _calculate_sources(self, target):
-    gentargets = OrderedSet()
+  def _calculate_source_roots(self, target):
+    source_roots = OrderedSet()
 
-    def add_to_gentargets(target):
+    def add_to_source_roots(target):
       if self.is_gentarget(target):
-        gentargets.add(target)
+        source_roots.add(target.source_root)
     self.context.build_graph.walk_transitive_dependency_graph(
       [target.address],
-      add_to_gentargets,
+      add_to_source_roots,
       postorder=True)
-    sources_by_base = OrderedDict()
-    for target in gentargets:
-      base = target.target_base
-      if base not in sources_by_base:
-        sources_by_base[base] = OrderedSet()
-      sources_by_base[base].update(target.sources_relative_to_buildroot())
-    return sources_by_base
+    return source_roots
 
   def _jars_to_directories(self, target):
     """Extracts and maps jars to directories containing their contents.

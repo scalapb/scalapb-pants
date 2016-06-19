@@ -8,17 +8,22 @@ from pants.backend.jvm.targets.jvm_target import JvmTarget
 from pants.base.payload import Payload
 from pants.base.payload_field import PrimitiveField
 
+import os
+
 
 logger = logging.getLogger(__name__)
 
 class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
   """A Java library generated from Protocol Buffer IDL files."""
 
-  def __init__(self, payload=None, imports=None,
+  def __init__(self,
+               payload=None,
+               imports=None,
                java_conversions=False,
                flat_package=False,
                grpc=True,
                single_line_to_string=False,
+               source_root=None,
                **kwargs):
     payload = payload or Payload()
     payload.add_fields({
@@ -26,7 +31,8 @@ class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
       'flat_package': PrimitiveField(flat_package),
       'grpc': PrimitiveField(grpc),
       'single_line_to_string': PrimitiveField(single_line_to_string),
-      'import_specs': PrimitiveField(imports or ())
+      'import_specs': PrimitiveField(imports or ()),
+      'source_root': PrimitiveField(source_root or '.')
     })
     super(ScalaPBLibrary, self).__init__(payload=payload, **kwargs)
 
@@ -38,3 +44,7 @@ class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
     """
     return self.payload.import_specs
 
+  @property
+  def source_root(self):
+    return os.path.normpath(
+        os.path.join(self.target_base, self.payload.source_root))
