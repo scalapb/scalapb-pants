@@ -24,4 +24,3 @@ jvm_binary(
   source='Main.scala',
   main='Main',
   dependencies=[':simple_proto', ':dep_proto'])
-

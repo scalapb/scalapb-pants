@@ -29,7 +29,7 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     super(ScalaPBGen, cls).register_options(register)
     cls.register_jvm_tool(register, 'scalapbc')
     register('--protoc-version', fingerprint=True,
-             help='Set a specific protoc version to use.', default='261')
+             help='Set a specific protoc version to use.', default='330')
 
   def synthetic_target_type(self, target):
     return ScalaLibrary
