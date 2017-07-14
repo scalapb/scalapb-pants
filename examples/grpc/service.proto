@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package grpc;
+
+message Request { }
+
+message Response { }
+
+service MyService {
+  rpc Handle (Request) returns (Response);
+}
