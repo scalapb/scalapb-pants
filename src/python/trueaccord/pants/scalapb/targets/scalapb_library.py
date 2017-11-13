@@ -36,13 +36,13 @@ class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
     })
     super(ScalaPBLibrary, self).__init__(payload=payload, **kwargs)
 
-  @property
-  def imported_jar_library_specs(self):
+  @classmethod
+  def imported_jar_library_spec_fields(cls, kwargs=None, payload=None):
     """List of JarLibrary specs to import.
 
     Required to implement the ImportJarsMixin.
     """
-    return self.payload.import_specs
+    yield ('imports', 'import_specs')
 
   @property
   def source_root(self):
