@@ -8,7 +8,7 @@ from hashlib import sha1
 
 from twitter.common.collections import OrderedSet
 
-from pants.backend.codegen.tasks.simple_codegen_task import SimpleCodegenTask
+from pants.task.simple_codegen_task import SimpleCodegenTask
 from pants.backend.jvm.targets.jar_library import JarLibrary
 from pants.backend.jvm.targets.scala_library import ScalaLibrary
 from pants.backend.jvm.tasks.jar_import_products import JarImportProducts
