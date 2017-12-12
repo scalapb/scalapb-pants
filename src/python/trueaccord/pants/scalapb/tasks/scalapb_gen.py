@@ -55,6 +55,13 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
 
     gen_scala = '--scala_out={0}:{1}'.format(','.join(scalapb_options), target_workdir)
 
+    # we use a custom protoc compiler that works on nix. This call figures out where that
+    # compiler lives on the file system
+    system_protoc = subprocess.check_output('which protoc', shell=True).rstrip('\n')
+
+    # this uses the command line flag I added to ScalaPB in 0.6.7 to actually use a custom protoc
+    args = ['--protoc=%s' % system_protoc, gen_scala]
+
     args = ['-v%s' % self.get_options().protoc_version, gen_scala]
 
     if target.payload.java_conversions:
