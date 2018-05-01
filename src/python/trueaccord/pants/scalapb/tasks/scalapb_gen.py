@@ -66,7 +66,7 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     classpath = self.tool_classpath('scalapbc')
 
     args.extend(sources)
-    main = 'com.trueaccord.scalapb.ScalaPBC'
+    main = 'scalapb.ScalaPBC'
     result = self.runjava(classpath=classpath, main=main, args=args, workunit_name='scalapb-gen')
 
     if result != 0:
