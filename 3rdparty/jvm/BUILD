@@ -1,6 +1,6 @@
 jar_library(name = 'scalapb-runtime',
   jars = [
-    jar('com.trueaccord.scalapb', 'scalapb-runtime_2.11', '0.6.0')
+    jar('com.thesamet.scalapb', 'scalapb-runtime_2.11', '0.7.4')
   ]
 )
 
@@ -12,6 +12,6 @@ jar_library(name = 'protobuf-runtime',
 
 jar_library(name = 'scalapb-runtime-grpc',
   jars = [
-    jar('com.trueaccord.scalapb', 'scalapb-runtime-grpc_2.11', '0.6.0')
+    jar('com.thesamet.scalapb', 'scalapb-runtime-grpc_2.11', '0.7.4')
   ]
 )
