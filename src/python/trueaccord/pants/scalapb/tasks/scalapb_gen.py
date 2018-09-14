@@ -21,6 +21,9 @@ from trueaccord.pants.scalapb.targets.scalapb_library import ScalaPBLibrary
 
 
 class ScalaPBGen(SimpleCodegenTask, NailgunTask):
+
+  sources_globs = ('**/*',)
+
   def __init__(self, *args, **kwargs):
     super(ScalaPBGen, self).__init__(*args, **kwargs)
 
