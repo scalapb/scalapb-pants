@@ -120,4 +120,4 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
   @property
   def _copy_target_attributes(self):
     """Propagate the provides attribute to the synthetic java_library() target for publishing."""
-    return ['provides', 'fatal_warnings']
+    return ['provides', 'compiler_option_sets']
