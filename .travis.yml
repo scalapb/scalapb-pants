@@ -1,6 +1,16 @@
-language: python
+dist: bionic
+language: java
 jdk: openjdk9
-python: 3.7
+
+addons:
+  apt:
+    packages:
+    - python3.7
+    - python3.7-dev
+
+cache:
+  directories:
+  - $HOME/.cache/pants
 
 script:
 - ./pants compile examples/client:client_proto
