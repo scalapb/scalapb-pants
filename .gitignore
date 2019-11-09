@@ -1,4 +1,5 @@
 .pants.d
+logs/
 dist
 .pids
 .pants.workdir.file_lock
