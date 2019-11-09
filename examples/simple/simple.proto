@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package simple;
 
-option java_package = "com.trueaccord.scalapb.examples";
+option java_package = "com.thesamet.scalapb.examples";
 
 message SimpleMessage {
   optional int32 number = 1;
