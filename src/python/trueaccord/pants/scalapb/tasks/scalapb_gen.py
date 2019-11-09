@@ -21,11 +21,16 @@ from trueaccord.pants.scalapb.targets.scalapb_library import ScalaPBLibrary
 
 
 class ScalaPBGen(SimpleCodegenTask, NailgunTask):
-
   sources_globs = ('**/*',)
 
   def __init__(self, *args, **kwargs):
     super(ScalaPBGen, self).__init__(*args, **kwargs)
+
+  @classmethod
+  def prepare(cls, options, round_manager):
+    super().prepare(options, round_manager)
+    round_manager.require_data(JarImportProducts)
+    round_manager.optional_data('deferred_sources')
 
   @classmethod
   def register_options(cls, register):

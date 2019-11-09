@@ -16,6 +16,9 @@ logger = logging.getLogger(__name__)
 class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
   """A Java library generated from Protocol Buffer IDL files."""
 
+  imported_target_kwargs_field = 'imports'
+  imported_target_payload_field = 'import_specs'
+
   def __init__(self,
                payload=None,
                imports=None,
@@ -35,14 +38,6 @@ class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
       'source_root': PrimitiveField(source_root or '.')
     })
     super(ScalaPBLibrary, self).__init__(payload=payload, **kwargs)
-
-  @classmethod
-  def imported_jar_library_spec_fields(cls, kwargs=None, payload=None):
-    """List of JarLibrary specs to import.
-
-    Required to implement the ImportJarsMixin.
-    """
-    yield ('imports', 'import_specs')
 
   @property
   def source_root(self):
