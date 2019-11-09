@@ -17,7 +17,7 @@ from pants.base.build_environment import get_buildroot
 from pants.base.exceptions import TaskError
 from pants.build_graph.address import Address
 from pants.fs.archive import ZIP
-from trueaccord.pants.scalapb.targets.scalapb_library import ScalaPBLibrary
+from scalapb.pants.targets.scalapb_library import ScalaPBLibrary
 
 
 class ScalaPBGen(SimpleCodegenTask, NailgunTask):

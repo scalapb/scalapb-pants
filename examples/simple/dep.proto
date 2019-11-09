@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package dep;
 
-option java_package = "com.trueaccord.scalapb.examples";
+option java_package = "com.thesame.scalapb.examples";
 
 import "simple.proto";
 
