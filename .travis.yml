@@ -1,7 +1,0 @@
-language: python
-jdk: openjdk9
-python: 3.7
-
-script:
-- ./pants compile examples/client:client_proto
-- ./pants run examples/simple:main 
