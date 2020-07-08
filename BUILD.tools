@@ -1,5 +1,5 @@
 jar_library(name = 'scalapbc',
             jars = [
-              scala_jar('com.thesamet.scalapb', 'scalapbc', '0.9.4'),
+              scala_jar('com.thesamet.scalapb', 'scalapbc', '0.10.1'),
             ])
 

@@ -1,0 +1,17 @@
+[GLOBAL]
+pants_version = "1.29.0"
+print_exception_stacktrace = true
+enable_pantsd = false
+
+pythonpath = ['%(buildroot)s/src/python']
+
+backend_packages.add = [
+    'scalapb.pants'
+]
+backend_packages.remove = [
+    'pants.backend.python.lint.isort'
+]
+
+[scala]
+version = 2.12
+

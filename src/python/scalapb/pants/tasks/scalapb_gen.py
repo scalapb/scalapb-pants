@@ -6,8 +6,6 @@ import subprocess
 from collections import OrderedDict
 from hashlib import sha1
 
-from twitter.common.collections import OrderedSet
-
 from pants.task.simple_codegen_task import SimpleCodegenTask
 from pants.backend.jvm.targets.jar_library import JarLibrary
 from pants.backend.jvm.targets.scala_library import ScalaLibrary
@@ -68,6 +66,8 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     if target.payload.java_conversions:
         args.append('--java_out={0}'.format(target_workdir))
 
+    source_roots = list(source_roots)
+    source_roots.sort()
     for source_root in source_roots:
       args.append('--proto_path={0}'.format(source_root))
 
@@ -81,7 +81,7 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
       raise TaskError('scalapb-gen ... exited non-zero ({})'.format(result))
 
   def _calculate_source_roots(self, target):
-    source_roots = OrderedSet()
+    source_roots = set()
 
     def add_to_source_roots(target):
       if self.is_gentarget(target):
