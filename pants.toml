@@ -15,3 +15,10 @@ backend_packages.remove = [
 [scala]
 version = 2.12
 
+[jvm-platform]
+default_platform = "java11"
+platforms = """
+{
+  'java11': {'source': '11', 'target': '11', 'args': [] },
+}
+"""
