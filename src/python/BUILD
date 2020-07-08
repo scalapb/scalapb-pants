@@ -1,6 +1,6 @@
 python_library(
   name = 'plugin',
-  sources = rglobs('scalapb/pants/*.py'),
+  sources = ['scalapb/pants/**/*.py'],
   dependencies = [
   ],
   provides = setup_py(

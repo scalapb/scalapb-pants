@@ -1,6 +1,6 @@
 dist: bionic
 language: java
-jdk: openjdk9
+jdk: openjdk11
 
 addons:
   apt:

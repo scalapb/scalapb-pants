@@ -21,6 +21,9 @@ scalapb_library(
 
 jvm_binary(
   name='main',
-  source='Main.scala',
-  main='Main',
-  dependencies=[':simple_proto', ':dep_proto'])
+  sources=['./Main.scala'],
+  main='com.thesamet.scalapb.examples.Main',
+  dependencies=[
+    ':simple_proto',
+    ':dep_proto'
+  ])

@@ -1,11 +1,11 @@
-import com.scalapb.examples.simple.SimpleMessage
-import com.scalapb.examples.dep.DependentProto
+package com.thesamet.scalapb.examples
 
-object Main {
-  def main(args: Array[String]) = {
-    val sm = SimpleMessage().update(_.number := 17)
-    val dep = DependentProto().update(_.simpleField.number := 14)
-    println(sm)
-    println(dep)
-  }
+import com.thesamet.scalapb.examples.simple.SimpleMessage
+import com.thesamet.scalapb.examples.dep.DependentProto
+
+object Main extends App {
+  val sm = SimpleMessage().update(_.number := 17)
+  val dep = DependentProto().update(_.simpleField.number := 14)
+  println(sm)
+  println(dep)
 }
