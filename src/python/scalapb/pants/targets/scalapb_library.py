@@ -1,17 +1,11 @@
 from __future__ import (absolute_import, division, generators, nested_scopes, print_function,
                         unicode_literals, with_statement)
 
-import logging
-
 from pants.backend.jvm.targets.import_jars_mixin import ImportJarsMixin
 from pants.backend.jvm.targets.jvm_target import JvmTarget
 from pants.base.payload import Payload
 from pants.base.payload_field import PrimitiveField
-
 import os
-
-
-logger = logging.getLogger(__name__)
 
 class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
   """A Java library generated from Protocol Buffer IDL files."""
@@ -38,6 +32,10 @@ class ScalaPBLibrary(ImportJarsMixin, JvmTarget):
       'source_root': PrimitiveField(source_root or '.')
     })
     super(ScalaPBLibrary, self).__init__(payload=payload, **kwargs)
+
+  @classmethod
+  def alias(cls):
+    return "scalapb_library"
 
   @property
   def source_root(self):
