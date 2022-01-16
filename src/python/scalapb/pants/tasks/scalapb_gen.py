@@ -35,7 +35,7 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     super(ScalaPBGen, cls).register_options(register)
     cls.register_jvm_tool(register, 'scalapbc')
     register('--protoc-version', fingerprint=True,
-             help='Set a specific protoc version to use.', default='330')
+             help='Set a specific protoc version to use.', default='3.3.0')
 
   def synthetic_target_type(self, target):
     return ScalaLibrary
@@ -48,6 +48,8 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
 
     source_roots = self._calculate_source_roots(target)
     source_roots.update(self._proto_path_imports([target]))
+    # This is needed when used with unpacked jars
+    source_roots.add(target._sources_field.sources.rel_root)
 
     scalapb_options = []
     if target.payload.java_conversions:
@@ -69,7 +71,8 @@ class ScalaPBGen(SimpleCodegenTask, NailgunTask):
     source_roots = list(source_roots)
     source_roots.sort()
     for source_root in source_roots:
-      args.append('--proto_path={0}'.format(source_root))
+      if (source_root != '.'):
+        args.append('--proto_path={0}'.format(source_root))
 
     classpath = self.tool_classpath('scalapbc')
 
